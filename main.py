@@ -63,11 +63,11 @@ class WeatherApp(QWidget):
             }
             
             QLabel#Temp{
-            font-size: 30px;
+            font-size: 50px;
             }
 
             QLabel#emoji{
-            font-size: 50px;
+            font-size: 70px;
             font-family: Segoe UI emoji
             }
 
@@ -124,12 +124,42 @@ class WeatherApp(QWidget):
 #DISPLAY WEATHER FUNCTION -----------------------------------------------------
 
     def display_weather(self,data):
-        pass
+        temperature_k = data["main"]["temp"]
+        temperature_c = temperature_k - 273.15
+        self.Temperature.setText(f"{temperature_c:.0f}° C")
+        weather_description = data["weather"][0]["description"]
+        self.description.setText(weather_description)
+        weather_id = data["weather"][0]["id"]
+        self.emoji.setText(self.display_emoji(weather_id))
+
+#DISPLAY EMOJI FUNCTION -----------------------------------------------------
+
+    def display_emoji(self,weather_id):
+        if  232 >= weather_id >= 200:
+            return "⛈️"
+        elif 321 >= weather_id >= 300:
+            return "💦"
+        elif 531 >= weather_id >= 500:
+            return "🌧️"
+        elif 622 >= weather_id >= 600:
+            return "❄️"
+        elif weather_id == 781 :
+            return "🌪️"
+        elif weather_id == 800:
+            return "🌇"
+        elif 804 >= weather_id >= 801:
+            return "☁️"
+        else : 
+            return ""
+
 
 #DISPLAY ERROR FUNCTION -----------------------------------------------------
 
     def display_error(self,message):
         QMessageBox.critical(self,"Error",message)
+        self.Temperature.clear()
+        self.emoji.clear()
+        self.description.clear()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
