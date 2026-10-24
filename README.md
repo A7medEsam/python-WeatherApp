@@ -1,6 +1,7 @@
 # python-WeatherApp
 
 App description : > you can find the weather of any city through typing the city's name
+
                   > The weather data is requested from openweathermap.org/api API
 
 Libraries Used : 
